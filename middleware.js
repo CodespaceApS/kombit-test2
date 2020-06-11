@@ -24,8 +24,6 @@ const sp = samlify.ServiceProvider({
   wantMessageSigned: true,
   wantLogoutResponseSigned: true,
   wantLogoutRequestSigned: true,
-  privateKey: fs.readFileSync(__dirname + '/key/sign/privkey.pem'),
-  privateKeyPass: 'VHOSp5RUiBcrsjrcAuXFwU1NKCkGA8px',
   isAssertionEncrypted: false,
   assertionConsumerService: [{
     Binding: binding.post,
@@ -42,8 +40,6 @@ const spEnc = samlify.ServiceProvider({
   wantLogoutRequestSigned: true,
   encryptCert: fs.readFileSync(__dirname + '/key/sign/cert.cer'),
   signingCert: fs.readFileSync(__dirname + '/key/sign/cert.cer'),
-  privateKey: fs.readFileSync(__dirname + '/key/sign/privkey.pem'),
-  privateKeyPass: 'VHOSp5RUiBcrsjrcAuXFwU1NKCkGA8px',
   encPrivateKey: fs.readFileSync(__dirname + '/key/encrypt/privkey.pem'),
   assertionConsumerService: [{
     Binding: binding.post,

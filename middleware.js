@@ -6,12 +6,12 @@ const binding = samlify.Constants.namespace.binding;
 samlify.setSchemaValidator(validator);
 
 const oktaIdp = samlify.IdentityProvider({
-  metadata: fs.readFileSync(__dirname + '/metadata/nemid.xml'),
+  metadata: fs.readFileSync(__dirname + '/metadata/nemid-konnunal.xml'),
   wantLogoutRequestSigned: true
 });
 
 const oktaIdpEnc = samlify.IdentityProvider({
-  metadata: fs.readFileSync(__dirname + '/metadata/nemid.xml'),
+  metadata: fs.readFileSync(__dirname + '/metadata/nemid-konnunal.xml'),
   isAssertionEncrypted: true,
   messageSigningOrder: 'encrypt-then-sign',
   wantLogoutRequestSigned: true,

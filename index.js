@@ -38,7 +38,7 @@ app.get('/idp/metadata', (req, res) => {
     throw new Error('ERR_USER_NOT_FOUND');
   } catch (e) {
     console.log('[FATAL] when parsing login response sent from okta', e);
-    return res.redirect('/');
+    return res.send('Error');
   }
 });
 

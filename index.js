@@ -21,6 +21,7 @@ app.get('/idp/metadata', (req, res) => {
 
  // assertion consumer service endpoint (post-binding)
  app.post('/sp/acs', async (req, res) => {
+  return res.send('Error');
   try {
     const { extract } = await req.sp.parseLoginResponse(req.idp, 'post', req);
     const { login } = extract.attributes;

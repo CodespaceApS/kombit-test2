@@ -37,7 +37,7 @@ app.get('/idp/metadata', (req, res) => {
     }
     throw new Error('ERR_USER_NOT_FOUND');
   } catch (e) {
-    console.error('[FATAL] when parsing login response sent from okta', e);
+    console.log('[FATAL] when parsing login response sent from okta', e);
     return res.redirect('/');
   }
 });
@@ -46,19 +46,6 @@ app.get('/idp/metadata', (req, res) => {
 app.get('/sso/redirect', async (req, res) => {
   const { id, context: redirectUrl } = await req.sp.createLoginRequest(req.idp, 'redirect');
   return res.redirect(redirectUrl);
-});
-
-app.get('/sso/post', async (req, res) => {
-  const { id, context } = await req.sp.createLoginRequest(req.idp, 'post');
-  // construct form data
-  const endpoint = req.idp.entityMeta.getSingleSignOnService('post');
-  const requestForm = fs
-    .readFileSync('./request.html')
-    .toString()
-    .replace('$ENDPOINT', endpoint)
-    .replace('$CONTEXT', context);
-
-  return res.send(requestForm);
 });
 
 // endpoint where consuming logout response

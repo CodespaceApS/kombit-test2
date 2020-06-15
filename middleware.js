@@ -41,8 +41,8 @@ const spEnc = samlify.ServiceProvider({
   wantAssertionsSigned: true,
   wantMessageSigned: true,
   singleLogoutService: [{
-    Binding: binding.post,
-    Location: 'https://kombit.codespace.dk/sp/sls',
+    Binding: binding.redirect,
+    Location: 'https://kombit.codespace.dk/sp/single_logout/redirect',
   }],
   wantLogoutResponseSigned: true,
   wantLogoutRequestSigned: true,

@@ -5,11 +5,6 @@ const validator = require('@authenio/samlify-node-xmllint')
 const binding = samlify.Constants.namespace.binding;
 samlify.setSchemaValidator(validator);
 
-const oktaIdp = samlify.IdentityProvider({
-  metadata: fs.readFileSync(__dirname + '/metadata/nemid.xml'),
-  wantLogoutRequestSigned: true
-});
-
 const oktaIdpEnc = samlify.IdentityProvider({
   metadata: fs.readFileSync(__dirname + '/metadata/nemid.xml'),
   isAssertionEncrypted: true,
@@ -17,14 +12,16 @@ const oktaIdpEnc = samlify.IdentityProvider({
   wantLogoutRequestSigned: true,
 });
 
-const sp = samlify.ServiceProvider({
+const spEnc = samlify.ServiceProvider({
   entityID: 'https://kombit.codespace.dk/sp/metadata',
-  authnRequestsSigned: false,
+  authnRequestsSigned: true,
   wantAssertionsSigned: true,
   wantMessageSigned: true,
   wantLogoutResponseSigned: true,
   wantLogoutRequestSigned: true,
-  isAssertionEncrypted: false,
+  privateKey: fs.readFileSync(__dirname + '/key/sign/privkey.pem'),
+  encryptCert: fs.readFileSync(__dirname + '/key/sign/cert.cer'),
+  signingCert: fs.readFileSync(__dirname + '/key/sign/cert.cer'),
   singleLogoutService: [{
     Binding: binding.redirect,
     Location: 'https://kombit.codespace.dk/sp/single_logout/redirect',
@@ -35,31 +32,8 @@ const sp = samlify.ServiceProvider({
   }]
 });
 
-const spEnc = samlify.ServiceProvider({
-  entityID: 'https://kombit.codespace.dk/sp/metadata?encrypted=true',
-  authnRequestsSigned: true,
-  wantAssertionsSigned: true,
-  wantMessageSigned: true,
-  singleLogoutService: [{
-    Binding: binding.redirect,
-    Location: 'https://kombit.codespace.dk/sp/single_logout/redirect',
-  }],
-  wantLogoutResponseSigned: true,
-  wantLogoutRequestSigned: true,
-  encryptCert: fs.readFileSync(__dirname + '/key/sign/cert.cer'),
-  signingCert: fs.readFileSync(__dirname + '/key/sign/cert.cer'),
-  assertionConsumerService: [{
-    Binding: binding.post,
-    Location: 'https://kombit.codespace.dk/sp/acs?encrypted=true',
-  }]
-});
-
 module.exports.assignEntity = (req, res, next) => {
-  req.idp = oktaIdp;
-  req.sp = sp;
-  if (true) {
     req.idp = oktaIdpEnc;
     req.sp = spEnc;
-  }
   return next();
 };

@@ -36,7 +36,7 @@ const sp = samlify.ServiceProvider({
 });
 
 const spEnc = samlify.ServiceProvider({
-  entityID: 'https://kombit.codespace.dk/metadata?encrypted=true',
+  entityID: 'https://kombit.codespace.dk/sp/metadata?encrypted=true',
   authnRequestsSigned: true,
   wantAssertionsSigned: true,
   wantMessageSigned: true,

@@ -18,7 +18,7 @@ const oktaIdpEnc = samlify.IdentityProvider({
 });
 
 const sp = samlify.ServiceProvider({
-  entityID: 'https://kombit.codespace.dk/metadata',
+  entityID: 'https://kombit.codespace.dk/sp/metadata',
   authnRequestsSigned: false,
   wantAssertionsSigned: true,
   wantMessageSigned: true,
@@ -26,8 +26,8 @@ const sp = samlify.ServiceProvider({
   wantLogoutRequestSigned: true,
   isAssertionEncrypted: false,
   singleLogoutService: [{
-    Binding: binding.post,
-    Location: 'https://kombit.codespace.dk/sp/sls',
+    Binding: binding.redirect,
+    Location: 'https://kombit.codespace.dk/sp/single_logout/redirect',
   }],
   assertionConsumerService: [{
     Binding: binding.post,

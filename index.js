@@ -19,9 +19,32 @@ app.get('/idp/metadata', (req, res) => {
   res.header('Content-Type', 'text/xml').send(req.idp.getMetadata());
 });
 
+app.post('/sp/sls', async (req, res) => {
+  return res.send('Ok');
+  try {
+    const { extract } = await req.sp.parseLoginResponse(req.idp, 'post', req);
+    const { login } = extract.attributes;
+    // get your system user
+    const payload = getUser(login);
+
+    // assign req user
+    req.user = { nameId: login };
+
+    if (payload) {
+      // create session and redirect to the session page
+      const token = createToken(payload);
+      return res.redirect(`/?auth_token=${token}`);
+    }
+    throw new Error('ERR_USER_NOT_FOUND');
+  } catch (e) {
+    console.log('[FATAL] when parsing login response sent from okta', e);
+    return res.send('Error');
+  }
+});
+
  // assertion consumer service endpoint (post-binding)
  app.post('/sp/acs', async (req, res) => {
-  return res.send('Error');
+  return res.send('Ok');
   try {
     const { extract } = await req.sp.parseLoginResponse(req.idp, 'post', req);
     const { login } = extract.attributes;

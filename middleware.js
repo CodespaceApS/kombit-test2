@@ -25,6 +25,10 @@ const sp = samlify.ServiceProvider({
   wantLogoutResponseSigned: true,
   wantLogoutRequestSigned: true,
   isAssertionEncrypted: false,
+  singleLogoutService: [{
+    Binding: binding.post,
+    Location: 'https://kombit.codespace.dk/sp/sls',
+  }],
   assertionConsumerService: [{
     Binding: binding.post,
     Location: 'https://kombit.codespace.dk/sp/acs',
@@ -36,11 +40,14 @@ const spEnc = samlify.ServiceProvider({
   authnRequestsSigned: true,
   wantAssertionsSigned: true,
   wantMessageSigned: true,
+  singleLogoutService: [{
+    Binding: binding.post,
+    Location: 'https://kombit.codespace.dk/sp/sls',
+  }],
   wantLogoutResponseSigned: true,
   wantLogoutRequestSigned: true,
   encryptCert: fs.readFileSync(__dirname + '/key/sign/cert.cer'),
   signingCert: fs.readFileSync(__dirname + '/key/sign/cert.cer'),
-  encPrivateKey: fs.readFileSync(__dirname + '/key/encrypt/privkey.pem'),
   assertionConsumerService: [{
     Binding: binding.post,
     Location: 'https://kombit.codespace.dk/sp/acs?encrypted=true',

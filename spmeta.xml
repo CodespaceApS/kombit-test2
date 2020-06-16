@@ -1,7 +1,7 @@
 <EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" 
   xmlns:assertion="urn:oasis:names:tc:SAML:2.0:assertion" 
   xmlns:ds="http://www.w3.org/2000/09/xmldsig#" entityID="https://kombit.codespace.dk/sp/metadata">
-  <SPSSODescriptor AuthnRequestsSigned="true" WantAssertionsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+  <SPSSODescriptor AuthnRequestsSigned="false" WantAssertionsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
     <KeyDescriptor use="signing">
       <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
         <ds:X509Data>
